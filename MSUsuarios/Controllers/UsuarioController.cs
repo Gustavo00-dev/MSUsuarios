@@ -140,7 +140,7 @@ namespace MSUsuarios.Controllers
                 var usuario = _usuarioRepository.ObterPorId(idUsuarioDeletar);
                 if (usuario == null)
                 {
-                    return NotFound($"Usuário com ID {idUsuarioDeletar} não encontrado.");
+                    return NotFound($"Usuario com ID {idUsuarioDeletar} não encontrado.");
                 }
 
                 // TODO: Implementar deleção em cascata se necessário, para deletar a biblioteca de jogos associada ao usuário.

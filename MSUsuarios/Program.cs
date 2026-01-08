@@ -1,6 +1,7 @@
 using MSUsuarios.Infrastructure.Db;
 using MSUsuarios.Infrastructure.Configuracao;
 using MSUsuarios.Application.Configuracao;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,9 +37,26 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseSwagger();
+app.UsePathBase("/msusuarios");
+app.UseSwagger(c =>
+{
+   c.PreSerializeFilters.Add((swagger, httpReq) =>
+   {
+       swagger.Servers = new List<OpenApiServer>
+       {
+                        new OpenApiServer
+                        {
+                            Url = "/msusuarios"
+                        }
+       };
+   });
+});
 
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/msusuarios/swagger/v1/swagger.json", "msusuarios v1");
+    c.RoutePrefix = "swagger";
+});
 
 app.UseAuthorization();
 
